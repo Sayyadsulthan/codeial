@@ -6,7 +6,7 @@ const app = express();
 
 app.listen(port, function(err){
     if(err){
-        console.log(`error in running express, ${err}`);
+        console.log(`error is in running express, ${err}`);
         return;
     }
 
