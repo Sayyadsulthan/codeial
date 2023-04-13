@@ -1,4 +1,7 @@
 module.exports.home = function(req, res){
     console.log('home page');
-    return res.send('<h1> codeial is running now !!</h1>');
+    return res.render('home',{
+        title:"posts",
+        subtitle: "congrats :)"
+    });
 }

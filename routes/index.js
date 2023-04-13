@@ -8,8 +8,11 @@ const userController = require('./users');
 
 console.log("router is loading / running")
 
+
+
 router.get('/', home_Controller.home );
-// router.use('/users', require('./users'));
+
 router.use('/users', require('./users'));
+
 
 module.exports = router;
