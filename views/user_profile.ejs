@@ -3,8 +3,17 @@
 
     <!-- using the partials to header -->
     <!-- <%# include('_header'); %> -->
+    <!-- <a href="/users/logout?cookie=<%= user._id %>" >
+        <button >Log-out</button>
+    </a> -->
 
     <h1><%= subtitle %>  page is running !!! <%= emoji %>  </h1>
+    <ul>
+        <li>
+            <p><label > User_name: </label> <%= user.name %> </p>
+            <p><label > user_email: </label> <%= user.email %> </p>
+        </li>
+    </ul>
 
     <!-- using partials to footer -->
     <!-- <%# include('_footer'); %> -->
