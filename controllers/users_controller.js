@@ -69,4 +69,15 @@ module.exports.createSession=(function(req, res){
     return res.redirect('/');
 });
 
+// used logout and destroy session
+module.exports.destroySession= function(req, res, next){
+    req.logout(function(err){
+        if(err){
+            return next(err);
+        }
+
+        return res.redirect('/');
+    });
+
+}
 

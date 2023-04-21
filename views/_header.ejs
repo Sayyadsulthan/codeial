@@ -1,5 +1,25 @@
 
     <header>
-        <h1>its working</h1>
+        <h1>Header</h1>
+        <ul>
+            <% if(locals.user){ %>
+                <li>
+                    <%= user.name %>
+                </li>
+                <a href="/users/sign-out">
+                    <li>Sign Out</li>
+                </a>
+                
+               <% }else{ %>
+                <a href="/users/sign-in">
+                    <li>Sign In</li>
+                </a>
+                <a href="/users/sign-up">
+                    <li>Sign Up</li>
+                </a>
+                
+               <% } %>
+        </ul>
         <hr>
+
     </header>
