@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <!-- font awsome -->
+    <script src="https://kit.fontawesome.com/66a49a29d4.js" crossorigin="anonymous"></script>
     <!-- link stylesheet -->
     <link rel="stylesheet" href="/css/layout.css">
 
@@ -14,8 +16,11 @@
     <!-- using the partials to header -->
     <%- include('_header'); %> <!-- extension name ejs not compulsory -->
 
+    <main>
+
+        <%- body %>
+    </main>
     
-    <%- body %>
 
     <!-- using partials to footer -->
     <%- include('_footer.ejs'); %>

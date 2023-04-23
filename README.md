@@ -4,7 +4,9 @@ Require some library to run this project:
 
 
 middle ware for authentication:- 
+librarry:-
     passport
+
         passport-local 
 
         and express-session
@@ -12,3 +14,7 @@ middle ware for authentication:-
 Command to install library:-
 
     npm install librarry-name
+
+Mongo Store librarry used to store session cookies;-
+    librarry name :- 
+        connect-mongo

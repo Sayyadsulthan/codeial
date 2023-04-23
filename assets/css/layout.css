@@ -1,4 +1,9 @@
-body{
-    margin: 0;
-    text-align: center;
+body {
+  margin: 0;
+  text-align: center;
+  background-color: "green";
+  color: rgb(167, 39, 39);
+}
+body main {
+  min-height: 90vh;
 }
