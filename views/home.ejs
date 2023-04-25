@@ -4,15 +4,16 @@
 
     <h1><%= subtitle %> page is running !!!  </h1>
 
+    <% if(locals.user){ %>
     <section id="feed-posts">
         <form action="/posts/create" id="new-post-form" method="post">
             <textarea name="content"  cols="30" rows="3" placeholder="type here...."></textarea>
             <input type="submit" value="post" >
         </form>
     </section>
+    <% } %>
 
     <ul>
-        <% if(locals.posts){ %>
             <% for(let post of posts){ %>
                 <li>
                     <p>
@@ -23,7 +24,6 @@
                     </p>
                 </li>
             <% } %>
-       <% } %>
         
     </ul>
     <!-- using partials to footer -->

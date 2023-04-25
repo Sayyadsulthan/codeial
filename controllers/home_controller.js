@@ -3,7 +3,7 @@ const Post = require('../models/post');
 module.exports.home = function(req, res){
     // console.log(req.user);
      console.log(`request for, ${req.path}`);
-    console.log('cookires:', req.cookies);
+    // console.log('cookires:', req.cookies);
 
     //to populate the user of each post
     Post.find({}).populate('user').exec()
