@@ -4,6 +4,28 @@
 
     <h1><%= subtitle %> page is running !!!  </h1>
 
+    <section id="feed-posts">
+        <form action="/posts/create" id="new-post-form" method="post">
+            <textarea name="content"  cols="30" rows="3" placeholder="type here...."></textarea>
+            <input type="submit" value="post" >
+        </form>
+    </section>
+
+    <ul>
+        <% if(locals.posts){ %>
+            <% for(let post of posts){ %>
+                <li>
+                    <p>
+                        <label for=""> <%= post.content %> </label>
+                        <br>
+                        <small> <%= post.user.name %></small>
+                        
+                    </p>
+                </li>
+            <% } %>
+       <% } %>
+        
+    </ul>
     <!-- using partials to footer -->
     <!-- <%# include('_footer'); %> -->
 

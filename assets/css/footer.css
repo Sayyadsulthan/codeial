@@ -1,8 +1,8 @@
 footer {
   background-color: rgb(179, 117, 42);
-  
 }
 footer div {
   display: flex;
   color: black;
+  font-family: sans-serif;
 }

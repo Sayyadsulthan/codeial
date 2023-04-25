@@ -4,7 +4,7 @@ header {
   top: 0;
   height: 60px;
   width: 100%;
-  background-color: bisque;
+  background-color: rgb(91, 171, 220);
   justify-content: space-between;
 }
 header h1 {
@@ -12,7 +12,6 @@ header h1 {
   margin-bottom: auto;
 }
 header ul {
-  width: 50vw;
   list-style: none;
   display: flex;
   justify-content: space-between;
