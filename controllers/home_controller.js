@@ -1,4 +1,6 @@
 const Post = require('../models/post');
+// const  = require('../models/post');
+
 
 module.exports.home = function(req, res){
     // console.log(req.user);
