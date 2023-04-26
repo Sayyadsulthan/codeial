@@ -40,7 +40,7 @@
                     <div class="post-comments">
                         <% if(locals.user){ %>
 
-                            <form action="comment/create" method="post">
+                            <form action="comments/create" method="post">
                                 <input type="text" name="content" placeholder="type here to add comment">
                                 <input type="hidden" name="post" value="<%= post._id %>">
                                 <input type="submit" value="Add-comment">
@@ -51,6 +51,21 @@
                                 <div class="post-comments-list">
                                     <ul id="posts-commnets-<%= post._id %>">
                                         <% for(comment of post.comments){ %>
+                                            <% if(comment.user.id ==  locals.user._id){ %>
+                                               <!-- <small>
+
+                                                   <%# comment.user.id %>
+                                                   log user
+                                                   <br>
+                                                   <%# locals.user._id %>
+                                                </small>  -->
+
+                                                <small>
+                                                    <a href="/comments/destroy/<%= comment._id %>">
+                                                        remove comment
+                                                    </a>
+                                                </small>
+                                            <% } %>
                                             <p>
                                                 <%= comment.content %>
                                                     <br>

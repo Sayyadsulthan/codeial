@@ -31,3 +31,49 @@ module.exports.create = function (req, res) {
     }
 }
 
+module.exports.destroy = (req, res) => {
+    try {
+        Comment.findById(req.params.id)
+            .then((comment) => {
+                if (comment.user == req.user.id) {
+
+                    let postId = comment.post;
+                    //deleting comment from commentSchema
+                    try {
+
+                        Comment.deleteOne(comment)
+                            .then(() => {
+                                console.log("comment deleted succesfully ");
+                            })
+                    } catch (err) {
+                        console.log(err);
+                    }
+
+                    //update the comments in postSchema
+                    // try{
+                        Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id} })
+                        .then((post)=>{
+                            console.log("post comment deleted successfully..", post);
+                            return res.redirect('back');
+                        })
+
+                        .catch((err)=>{
+                            console.log(err);
+                            return res.redirect('back');
+                        })
+                    // }catch(err){
+                    //     console.log(err);
+                    //     return res.redirect('back');
+                    // }
+                }else{
+                    console.log("error in deleting");
+                    return res.redirect('back');
+                }
+                   
+
+            })
+    } catch (err) {
+        console.log("error while fetching comment: ", err);
+        return res.redirect('back');
+    }
+}
