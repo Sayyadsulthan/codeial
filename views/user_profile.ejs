@@ -1,21 +1,19 @@
+<link rel="stylesheet" href="/css/user_profile.css">
 
-    <link rel="stylesheet" href="/css/user_profile.css">
+<h1>
+    <%= subtitle %> page is running !!! <%= emoji %>
+</h1>
 
-    <!-- using the partials to header -->
-    <!-- <%# include('_header'); %> -->
-    <!-- <a href="/users/logout?cookie=<%# user._id %>" >
-        <button >Log-out</button>
-    </a> -->
 
-    <h1><%= subtitle %>  page is running !!! <%= emoji %>  </h1>
-    <ul>
-        <li>
-            <!-- <p><label > User_name: </label> <%# user.name %> </p>
-            <p><label > user_email: </label> <%# user.email %> </p> -->
-            <p><label > User_name: </label> <%= profile_user.name %> </p>
-            <p><label > user_email: </label> <%= profile_user.email %> </p>
-        </li>
-    </ul>
-
-    <!-- using partials to footer -->
-    <!-- <%# include('_footer'); %> -->
+<% if(user.id == profile_user.id){ %>
+    <!-- if the user matches then show the form -->
+    <form action="/users/update/<%= profile_user.id %>" method="post">
+        <input type="text" name="name" placeholder="Your Name" value="<%= profile_user.name %>" required>
+        <input type="text" name="email" placeholder="Your Email" value="<%= profile_user.email %>" required>
+        <input type="submit" value="update">
+    </form>
+<% }else{ %>
+    <!-- else show only the info -->
+    <p> <%= profile_user.name %> </p>
+    <p> <%= profile_user.email %> </p>
+<% } %>

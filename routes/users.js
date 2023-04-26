@@ -9,6 +9,8 @@ const passport = require('passport');
 // router.get('/', userController.home);
 router.get('/profile/:id',passport.checkAuthentication, userController.profile);
 
+router.post('/update/:id',passport.checkAuthentication, userController.update);
+
 router.get('/sign-up', userController.signup);
 router.get('/sign-in', userController.signin);
 
