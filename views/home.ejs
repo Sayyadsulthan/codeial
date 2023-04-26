@@ -51,20 +51,23 @@
                                 <div class="post-comments-list">
                                     <ul id="posts-commnets-<%= post._id %>">
                                         <% for(comment of post.comments){ %>
-                                            <% if(comment.user.id ==  locals.user._id){ %>
-                                               <!-- <small>
+                                            <% if(locals.user){ %>
 
-                                                   <%# comment.user.id %>
-                                                   log user
-                                                   <br>
-                                                   <%# locals.user._id %>
-                                                </small>  -->
-
-                                                <small>
-                                                    <a href="/comments/destroy/<%= comment._id %>">
-                                                        remove comment
-                                                    </a>
-                                                </small>
+                                                <% if( comment.user.id ==  locals.user._id || locals.user.id == post.user.id){ %>
+                                                    <!-- <small>
+                                                        
+                                                        <%# comment.user.id %>
+                                                        log user
+                                                        <br>
+                                                        <%# locals.user._id %>
+                                                    </small>  -->
+                                                    
+                                                    <small>
+                                                        <a href="/comments/destroy/<%= comment._id %>">
+                                                            remove comment
+                                                        </a>
+                                                    </small>
+                                                    <% } %>
                                             <% } %>
                                             <p>
                                                 <%= comment.content %>
