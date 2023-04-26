@@ -1,21 +1,24 @@
 const User = require('../models/user');
 
 module.exports.profile = function (req, res) {
-    console.log(`request of user , ${req.path}`);
-    // if(req.cookie)
-    console.log(req.cookies);
-    return res.render('user_profile', {
-        title: "user profile",
-        subtitle: "User Profile",
-        emoji: " :)",
-        
-    });
-   
+    // console.log(`request of user , ${req.path}`);
+
+    User.findById(req.params.id)
+        .then((user) => {
+
+            return res.render('user_profile', {
+                title: "user profile",
+                subtitle: "User Profile",
+                emoji: " :)",
+                profile_user: user
+
+            });
+        })
 }
 
 // render the sign up page
 module.exports.signup = function (req, res) {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
 
@@ -26,7 +29,7 @@ module.exports.signup = function (req, res) {
 
 // render the sign in page
 module.exports.signin = function (req, res) {
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
 
@@ -48,10 +51,10 @@ module.exports.create = function (req, res) {
             if (!user) {
                 // create new user
                 User.create(req.body)
-                .then(()=>{
-                    return res.redirect('/users/sign-in');
-                })
-                .catch( (err) =>{ return console.log('error in creating user in signing up'); })
+                    .then(() => {
+                        return res.redirect('/users/sign-in');
+                    })
+                    .catch((err) => { return console.log('error in creating user in signing up'); })
             } else {
                 // return to back or sign-in page
                 return res.redirect('back');
@@ -65,14 +68,14 @@ module.exports.create = function (req, res) {
         })
 }
 
-module.exports.createSession=(function(req, res){
+module.exports.createSession = (function (req, res) {
     return res.redirect('/');
 });
 
 // used logout and destroy session
-module.exports.destroySession= function(req, res, next){
-    req.logout(function(err){
-        if(err){
+module.exports.destroySession = function (req, res, next) {
+    req.logout(function (err) {
+        if (err) {
             return next(err);
         }
 
