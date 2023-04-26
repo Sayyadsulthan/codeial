@@ -14,74 +14,13 @@
     </section>
 
 
-<% } %>
+    <% } %>
 
-        <ul>
-            <% for(let post of posts){ %>
-                <li>
-                    <p>
-                        <% if(locals.user && post.user.id == locals.user.id){ %>
+        <ul id="posts-list-container">
+            <% for(post of posts){ %>
 
-                            <small>
-                                <a href="/posts/destroy/<%= post.id %>">
-                                    delete post
-                                </a>
-                            </small>
-                        <% } %>
-                        <label for="">
-                            <%= post.content %>
-                        </label>
-                        <br>
-                        <small>
-                            <%= post.user.name %>
-                        </small>
-                    </p>
+                <%- include('_post'); -%>
 
-                    <div class="post-comments">
-                        <% if(locals.user){ %>
-
-                            <form action="comments/create" method="post">
-                                <input type="text" name="content" placeholder="type here to add comment">
-                                <input type="hidden" name="post" value="<%= post._id %>">
-                                <input type="submit" value="Add-comment">
-                            </form>
-
-                            <% } %>
-
-                                <div class="post-comments-list">
-                                    <ul id="posts-commnets-<%= post._id %>">
-                                        <% for(comment of post.comments){ %>
-                                            <% if(locals.user){ %>
-
-                                                <% if( comment.user.id ==  locals.user._id || locals.user.id == post.user.id){ %>
-                                                    <!-- <small>
-                                                        
-                                                        <%# comment.user.id %>
-                                                        log user
-                                                        <br>
-                                                        <%# locals.user._id %>
-                                                    </small>  -->
-                                                    
-                                                    <small>
-                                                        <a href="/comments/destroy/<%= comment._id %>">
-                                                            remove comment
-                                                        </a>
-                                                    </small>
-                                                    <% } %>
-                                            <% } %>
-                                            <p>
-                                                <%= comment.content %>
-                                                    <br>
-                                                    <small>
-                                                        <%= comment.user.name %>
-                                                    </small>
-                                            </p>
-
-                                        <% } %>
-                                    </ul>
-                                </div>
-                    </div>
-                </li>
             <% } %>
 
         </ul>
