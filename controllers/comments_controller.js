@@ -30,7 +30,7 @@ module.exports.destroy = async (req, res) => {
         if (comment.user == req.user.id || post.user == req.user.id) {
 
             let postId = comment.post;
-            
+
             //deleting comment from commentSchema
             Comment.deleteOne(comment)
                 .then(() => {
@@ -38,22 +38,15 @@ module.exports.destroy = async (req, res) => {
                 })
 
             //update the comments in postSchema
-            try {
-                Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } })
-                    .then((post) => {
-                        console.log("post comment deleted successfully..", post);
-                        return res.redirect('back');
-                    })
-            } catch (err) {
-                console.log(err);
-                return res.redirect('back');
-            }
+            await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } })
+            req.flash('success', 'comment deleted successfully..');
+            return res.redirect('back');
         } else {
-            console.log("error in deleting");
+            req.flash('error', 'cannot delete comment');
             return res.redirect('back');
         }
     } catch (err) {
-        console.log("error while fetching comment: ", err);
+        req.flash('error', err);
         return res.redirect('back');
     }
 }

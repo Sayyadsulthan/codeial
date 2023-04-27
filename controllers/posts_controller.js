@@ -29,12 +29,12 @@ module.exports.destroy = async function (req, res) {
             //to delete comments related to post
             Comment.deleteMany({ post: req.params.id })//deletes many comments from Comment Schema
                 .then(() => {
+                    req.flash('success', 'post deleted successfully');
                     return res.redirect('back');
                 })
         }
-
     } catch (err) {
+        req.flash('error', err)
         return res.redirect('back');
     }
-
 }

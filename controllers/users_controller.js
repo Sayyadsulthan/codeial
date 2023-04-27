@@ -15,21 +15,22 @@ module.exports.profile = function (req, res) {
 }
 
 //update the user info
-module.exports.update = function (req, res) {
+module.exports.update = async function (req, res) {
 
-    if (req.user.id == req.params.id) {
-        console.log(req.body);
-        User.findByIdAndUpdate(req.params.id, req.body)
-            .then((user) => {
-                return res.redirect('back');
-            })
-            .catch((err) => {
-                console.log(err);
-                return res.redirect('back');
-            })
-    } else {
-        return res.status(401).send('Unauthorized');
+    try {
+        if (req.user.id == req.params.id) {
+            console.log(req.body);
+            await User.findByIdAndUpdate(req.params.id, req.body)
+            req.flash('success', 'User profile Updated..')
+            return res.redirect('back');
+        } else {
+            return res.status(401).send('Unauthorized');
+        }
+    } catch (err) {
+        req.flash('error', err);
+        return res.redirect('back');
     }
+
 }
 
 // render the sign up page
@@ -49,7 +50,7 @@ module.exports.signin = function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
-    
+
     return res.render('user_signin', {
         title: "sign in"
     })
@@ -82,7 +83,7 @@ module.exports.create = async function (req, res) {
 
 
 module.exports.createSession = (function (req, res) {
-    req.flash('success','seccessfully logged in');
+    req.flash('success', 'seccessfully logged in');
     return res.redirect('/');
 });
 
@@ -93,7 +94,7 @@ module.exports.destroySession = function (req, res, next) {
             return next(err);
         }
 
-        req.flash('success','You have logged out !');
+        req.flash('success', 'You have logged out !');
         return res.redirect('/');
     });
 
