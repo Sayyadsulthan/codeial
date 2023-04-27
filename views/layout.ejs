@@ -16,7 +16,16 @@
     <!-- using the partials to header -->
     <%- include('_header'); %> <!-- extension name ejs not compulsory -->
 
+    <!-- <%# if(flash.success && flash.length >0){ %>
+        <h5>
+            <%# flash.success %>
+        </h5>
+    <%# } %> -->
+    
     <main>
+        <h1>
+            <%= flash.success %>
+        </h1>
 
         <%- body %>
     </main>

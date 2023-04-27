@@ -18,3 +18,6 @@ Command to install library:-
 Mongo Store librarry used to store session cookies;-
     librarry name :- 
         connect-mongo
+
+for Flash message use
+npm install connect-flash

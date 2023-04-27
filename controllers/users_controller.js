@@ -34,6 +34,7 @@ module.exports.update = function (req, res) {
 
 // render the sign up page
 module.exports.signup = function (req, res) {
+
     if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
@@ -48,7 +49,7 @@ module.exports.signin = function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
     }
-
+    
     return res.render('user_signin', {
         title: "sign in"
     })
@@ -81,6 +82,7 @@ module.exports.create = async function (req, res) {
 
 
 module.exports.createSession = (function (req, res) {
+    req.flash('success','seccessfully logged in');
     return res.redirect('/');
 });
 
@@ -91,6 +93,7 @@ module.exports.destroySession = function (req, res, next) {
             return next(err);
         }
 
+        req.flash('success','You have logged out !');
         return res.redirect('/');
     });
 
