@@ -14,6 +14,7 @@ module.exports.profile = function (req, res) {
         })
 }
 
+//update the user info
 module.exports.update = function (req, res) {
 
     if (req.user.id == req.params.id) {
@@ -53,35 +54,31 @@ module.exports.signin = function (req, res) {
     })
 }
 
-module.exports.create = function (req, res) {
+//creating the user
+module.exports.create = async function (req, res) {
 
-    if (req.body.password != req.body.confirm_password) {
-        console.log("password and confirm_password not matches ");
-        return res.redirect('back');
+    try {
+        if (req.body.password != req.body.confirm_password) {
+            console.log("password and confirm_password not matches ");
+            return res.redirect('back');
+        }
+
+        let user = await User.findOne({ email: req.body.email })//find the user by email
+        // if user not found
+        if (!user) {
+            // create new user
+            await User.create(req.body)
+            return res.redirect('/users/sign-in');
+        } else {
+            // return to back or sign-in page
+            return res.redirect('back');
+        }
+    } catch (err) {
+        return console.log("Error", err);
     }
 
-    User.findOne({ email: req.body.email })//find the user by email
-        .then((user) => {
-            // if user not found
-            if (!user) {
-                // create new user
-                User.create(req.body)
-                    .then(() => {
-                        return res.redirect('/users/sign-in');
-                    })
-                    .catch((err) => { return console.log('error in creating user in signing up'); })
-            } else {
-                // return to back or sign-in page
-                return res.redirect('back');
-            }
-        })
-        // if err
-        .catch((err) => {
-            console.log('error in finding user in signing up');
-            // return res.redirect('back');
-            return;
-        })
 }
+
 
 module.exports.createSession = (function (req, res) {
     return res.redirect('/');
