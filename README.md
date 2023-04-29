@@ -19,5 +19,5 @@ Mongo Store librarry used to store session cookies;-
     librarry name :- 
         connect-mongo
 
-for Flash message use
+for Flash message use in session cookies
 npm install connect-flash
