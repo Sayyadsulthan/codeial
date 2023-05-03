@@ -6,10 +6,21 @@ module.exports.create =async function (req, res) {
     // if(req.isAuthenticated()){
     // console.log(req.user);
     try{
-        await Post.create({
+        let post= await Post.create({
             content: req.body.content,
             user: req.user._id
-        })
+        });
+
+        if(req.xhr){
+            return res.status(200).json({
+                data: {
+                    post: post
+                },
+                message: "Post created!"
+            })
+        }
+
+        req.flash('success', 'post published successfully!')
              return res.redirect('back'); 
     }catch(err){
         return console.log("error in creating post: ", err);
