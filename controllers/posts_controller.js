@@ -11,14 +11,16 @@ module.exports.create = async function (req, res) {
             user: req.user._id,
         });
 
-        if (req.xhr) {
+        if (req.xhr){
+            // if we want to populate just the name of the user (we'll not want to send the password in the API), this is how we do it!
+            post = await post.populate('user', 'name');
+
             return res.status(200).json({
                 data: {
-                    post: post,
+                    post: post
                 },
                 message: "Post created!"
-
-            })
+            });
         }
 
         req.flash('success', 'post published!')
@@ -42,12 +44,12 @@ module.exports.destroy = async function (req, res) {
             await Comment.deleteMany({ post: req.params.id })//deletes many comments from Comment Schema
 
             // if the request is xhr then it will be passed to ajax
-            if (req.xhr) {
+            if (req.xhr){
                 return res.status(200).json({
                     data: {
                         post_id: req.params.id
                     },
-                    message: "post deleted"
+                    message: "Post deleted"
                 });
             }
 

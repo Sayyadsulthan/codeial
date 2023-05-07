@@ -15,11 +15,17 @@
                 success: function (data) {
                     console.log(data);
                     let newPost = newPostDom(data.data.post);
+
                     $('#posts-list-container > ul').prepend(newPost);
+
+                    // // to delete post from DOM this will work created post 
+                    deletePost($(' .delete-post-button', newPost))
+
+                    // call the create comment class from home_post_comment.js
+                    new PostComments(data.data.post._id);
 
                     // using NOTY for display message
                     new Noty({
-
                         theme: 'relax',
                         type: 'success',
                         text: "post created! :)",
@@ -28,9 +34,6 @@
         
                     }).show();
 
-
-                    // // to delete post from DOM
-                    deletePost($(' .delete-post-button', newPost))
                 }, error: function (error) {
                     console.log(error.responseText);
                 }
@@ -43,44 +46,37 @@
     // method to create the post in DOM
     let newPostDom = function (post) {
         return $(`<li id="post-${post._id}">
-        <p>
-    
+        <p>    
                 <small>
                     <a class="delete-post-button" href="/posts/destroy/${post._id}">
                         <i class="fa-sharp fa-solid fa-trash"></i>
                     </a>
                 </small>
-                
                     <label for="">
-                    ${post.content}
+                        ${ post.content }
                     </label>
                     <br>
                     <small>
-                    ${post.user.name}
-                    
+                        ${ post.user.name }
                     </small>
         </p>
     
         <div class="post-comments">
     
-                <form action="comments/create" method="post">
+                <form id="post-${post._id}-comments-form" action="comments/create" method="post">
                     <input type="text" name="content" placeholder="type here to add comment">
                     <input type="hidden" name="post" value="${post._id}">
                     <input type="submit" value="Add-comment">
                 </form>
     
-    
                     <div class="post-comments-list">
                         <ul id="posts-commnets-${post._id}">
-                            
+
                         </ul>
                     </div>
         </div>
-    </li>`)
+    </li>`)    
     }
-
-
-    
 
     // method to delete a post from DOM
     let deletePost = function (deleteLink) {
@@ -120,6 +116,11 @@
         // console.log("for inside");
         console.log($(' .delete-post-button', post," 1"));
         deletePost($(' .delete-post-button', post))
+
+         // get the post's id by splitting the id attribute
+         let postId = $(post).prop('id').split("-")[1];
+         console.log(postId);
+         new PostComments(postId);
     }
 
     createPost();

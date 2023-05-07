@@ -15,6 +15,18 @@ module.exports.create = async function (req, res) {
             post.comments.push(comment);
             post.save();
 
+            if (req.xhr){
+                // Similar for comments to fetch the user's id!
+                comment = await comment.populate('user', 'name');
+    
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Post created!"
+                });
+            }
+
             res.redirect('/');//return to home page    
         }
     } catch (err) {
@@ -40,6 +52,17 @@ module.exports.destroy = async (req, res) => {
             //update the comments in postSchema
             await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } })
             req.flash('success', 'comment deleted successfully..');
+
+               // send the comment id which was deleted back to the views
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
+
             return res.redirect('back');
         } else {
             req.flash('error', 'cannot delete comment');
