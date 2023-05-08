@@ -19,7 +19,7 @@ module.exports.update = async function (req, res) {
 
     try {
         if (req.user.id == req.params.id) {
-            console.log(req.body);
+            console.log(req.params);
             await User.findByIdAndUpdate(req.params.id, req.body)
             req.flash('success', 'User profile Updated..')
             return res.redirect('back');

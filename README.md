@@ -20,4 +20,7 @@ Mongo Store librarry used to store session cookies;-
         connect-mongo
 
 for Flash message use in session cookies
-npm install connect-flash
+    npm install connect-flash
+
+multer librarry is used to upload files and store 
+    npm install multer  

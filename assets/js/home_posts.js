@@ -113,16 +113,14 @@
     
     for (let post of allpost) {
         // to delete post from DOM
-        // console.log("for inside");
-        console.log($(' .delete-post-button', post," 1"));
+        // console.log($(' .delete-post-button', post," 1"));
         deletePost($(' .delete-post-button', post))
 
          // get the post's id by splitting the id attribute
          let postId = $(post).prop('id').split("-")[1];
-         console.log(postId);
+        //  console.log($(post).prop('id').split("-")[1]);
          new PostComments(postId);
     }
 
     createPost();
-
 }
