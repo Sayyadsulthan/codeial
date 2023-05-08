@@ -17,18 +17,51 @@ module.exports.profile = function (req, res) {
 //update the user info
 module.exports.update = async function (req, res) {
 
-    try {
-        if (req.user.id == req.params.id) {
-            console.log(req.params);
-            await User.findByIdAndUpdate(req.params.id, req.body)
-            req.flash('success', 'User profile Updated..')
-            return res.redirect('back');
-        } else {
-            return res.status(401).send('Unauthorized');
-        }
-    } catch (err) {
-        req.flash('error', err);
+    // try {
+    //     if (req.user.id == req.params.id) {
+    //         console.log(req.params);
+    //         await User.findByIdAndUpdate(req.params.id, req.body)
+    //         req.flash('success', 'User profile Updated..')
+    //         return res.redirect('back');
+    //     } else {
+    //         return res.status(401).send('Unauthorized');
+    //     }
+    // } catch (err) {
+    //     req.flash('error', err);
+    //     return res.redirect('back');
+    // }
+
+
+    if(req.user.id == req.params.id){
+
+        try{
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar (req, res, function(err){
+                if(err){console.log('*****Multer err: ', err)};
+
+                console.log(req.file);
+
+                user.name= req.body.name;
+                user.email= req.body.email;
+
+                if(req.file){
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+
+                //when you use user.name= req.body.name then need to save() in db 
+                user.save();
+
+                req.flash('success', 'User profile Updated..')
+                return res.redirect('back');
+            })
+
+        }catch(err){
+            req.flash('error', err);
         return res.redirect('back');
+        }
+    }else{
+        req.flash('error', 'unauthorized..')
+        return res.status(401).send('Unauthorized');
     }
 
 }

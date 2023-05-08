@@ -26,18 +26,22 @@ const userSchema = new mongoose.Schema({
     timestamps:true
 });
 
-let storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, cb) {
     //   cb(null, '/tmp/my-uploads')
-      cb(null, path.join(__dirname), '..', AVATAR_PATH)
+      cb(null, path.join(__dirname), '..', AVATAR_PATH);
     },
     filename: function (req, file, cb) {
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      cb(null, file.fieldname + '-' + uniqueSuffix)
+    //   const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    //   cb(null, file.fieldname + '-' + uniqueSuffix);
+      cb(null, file.fieldname + '-' + Date.now());
     }
-  })
-  
+  });
 
+
+// static moethods/ functions
+ userSchema.statics.uploadedAvatar = multer({storage: storage}).single('avatar');
+ userSchema.statics.avatarPath = AVATAR_PATH;
 
 
 const User = mongoose.model('User', userSchema);
