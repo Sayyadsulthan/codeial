@@ -24,3 +24,8 @@ for Flash message use in session cookies
 
 multer librarry is used to upload files and store 
     npm install multer  
+
+
+
+FS FILESYSTEM Module/ librarry remove or delete reference to check file/ path exist or not
+https://www.golinuxcloud.com/node-js-check-if-file-or-directory-exists/

@@ -1,5 +1,8 @@
 const User = require('../models/user');
 
+const fs = require('fs');// file system librarry
+const path = require('path');
+
 module.exports.profile = function (req, res) {
     User.findById(req.params.id)
         .then((user) => {
@@ -15,34 +18,26 @@ module.exports.profile = function (req, res) {
 //update the user info
 module.exports.update = async function (req, res) {
 
-    // try {
-    //     if (req.user.id == req.params.id) {
-    //         console.log(req.params);
-    //         await User.findByIdAndUpdate(req.params.id, req.body)
-    //         req.flash('success', 'User profile Updated..')
-    //         return res.redirect('back');
-    //     } else {
-    //         return res.status(401).send('Unauthorized');
-    //     }
-    // } catch (err) {
-    //     req.flash('error', err);
-    //     return res.redirect('back');
-    // }
-
-
-    if(req.user.id == req.params.id){
-
-        try{
+    if (req.user.id == req.params.id) {
+        try {
             let user = await User.findById(req.params.id);
-            User.uploadedAvatar (req, res, function(err){
-                if(err){console.log('*****Multer err: ', err)};
+            User.uploadedAvatar(req, res, function (err) {
+                if (err) { console.log('*****Multer err: ', err) };
 
-                console.log(req.file);
+                // console.log(req.file);
+                user.name = req.body.name;
+                user.email = req.body.email;
 
-                user.name= req.body.name;
-                user.email= req.body.email;
+                if (user.avatar) {
+                    console.log("dir file exist before unlink : ", fs.existsSync(path.join(__dirname, '..', user.avatar)))
+                    // if file or path does not exist
+                    if (fs.existsSync(path.join(__dirname, '..', user.avatar))) {
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar));
+                    }
 
-                if(req.file){
+                }
+
+                if (req.file) {
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }
 
@@ -52,12 +47,11 @@ module.exports.update = async function (req, res) {
                 req.flash('success', 'User profile Updated..')
                 return res.redirect('back');
             })
-
-        }catch(err){
+        } catch (err) {
             req.flash('error', err);
-        return res.redirect('back');
+            return res.redirect('back');
         }
-    }else{
+    } else {
         req.flash('error', 'unauthorized..')
         return res.status(401).send('Unauthorized');
     }

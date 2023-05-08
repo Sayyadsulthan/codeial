@@ -15,11 +15,12 @@ const customMware = require('./config/middleware');
 app.use(express.urlencoded());
 
 app.use(cookeiParser());
-// setting up static folder
+// setting up static folder 
 app.use(express.static('./assets'));
 
-// make the uploads path available to brwoser
+// for uploading files make the uploads path available to brwoser
 app.use('/uploads', express.static(__dirname + '/uploads'));
+
 // using the express-ejs-layouts library
 app.use(expressLayouts);
 
