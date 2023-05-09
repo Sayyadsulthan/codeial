@@ -30,13 +30,13 @@ module.exports.update = async function (req, res) {
 
                 if (user.avatar) {
                     console.log("dir file exist before unlink : ", fs.existsSync(path.join(__dirname, '..', user.avatar)))
-                    // if file or path does not exist
+                    // if file or path exist
                     if (fs.existsSync(path.join(__dirname, '..', user.avatar))) {
                         fs.unlinkSync(path.join(__dirname, '..', user.avatar));
                     }
 
                 }
-
+                //if request has file
                 if (req.file) {
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }
