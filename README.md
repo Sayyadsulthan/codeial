@@ -29,3 +29,7 @@ multer librarry is used to upload files and store
 
 FS FILESYSTEM Module/ librarry remove or delete reference to check file/ path exist or not
 https://www.golinuxcloud.com/node-js-check-if-file-or-directory-exists/
+
+
+PASSPORT-JWT authentication strategy
+ npm install passport-jwt
