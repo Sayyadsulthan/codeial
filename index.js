@@ -34,7 +34,7 @@ app.set('views', './views');
 
 // mongostore is used to store the session in the db
 app.use(session({
-    name: 'codial',
+    name: 'codeial',
     // TODO change the secret before deployment in production mode
     secret: 'blahsomething',
     saveUninitialized: false,

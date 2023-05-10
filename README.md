@@ -31,5 +31,10 @@ FS FILESYSTEM Module/ librarry remove or delete reference to check file/ path ex
 https://www.golinuxcloud.com/node-js-check-if-file-or-directory-exists/
 
 
-PASSPORT-JWT authentication strategy
+PASSPORT-JWT authentication strategy for web token
  npm install passport-jwt
+
+used to create webtokens 
+ npm install jsonwebtoken
+
+
