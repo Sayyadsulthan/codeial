@@ -34,7 +34,7 @@ https://www.golinuxcloud.com/node-js-check-if-file-or-directory-exists/
 PASSPORT-JWT authentication strategy for web token
  npm install passport-jwt
 
-used to create webtokens 
+librarry used to create webTokens 
  npm install jsonwebtoken
 
 
