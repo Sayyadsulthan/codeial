@@ -38,3 +38,5 @@ librarry used to create webTokens
  npm install jsonwebtoken
 
 
+to use KUE librarry You need to install the redis and run SERVER of redis
+
