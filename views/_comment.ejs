@@ -10,6 +10,8 @@
                     </a>
                 </small>
             <% } %>
+
+            
         <% } %>
     
           
@@ -22,5 +24,25 @@
             </small>
             
         </small>
+
+        <% if(locals.user ){ %>
+            <small>
+                <a  href="/likes/toggle/?id=<%= comment.id %>&type=Comment">
+                   <% let likeduser; %>
+                   <% for(temp of comment.likes){ %>
+                    <% if(temp.user == user.id){ %>
+                        <%likeduser= temp.user; %>
+                        <% break; %>
+                        <% } %>
+                        <% } %>
+                        
+                   <% if(comment.likes.length>0 && likeduser == user.id){ %>
+                        <label for=""><i class="fa-solid fa-heart"></i> <%= comment.likes.length %></label>
+                   <% }else{ %>
+                        <label for=""><i class="fa-regular fa-heart"></i> <%= comment.likes.length %></label>
+                   <% } %> 
+                </a>
+            </small>
+            <% } %>
     </p>
 </li>

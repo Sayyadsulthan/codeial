@@ -12,7 +12,7 @@ let likeSchema = new mongoose.Schema({
     },
 // thif field is used for defining the type of the liked object since this is a dynamic reference
     onModel:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true,
         enum: ['Post', 'Comment']
     }

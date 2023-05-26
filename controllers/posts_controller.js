@@ -1,5 +1,6 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
+const Like = require('../models/like');
 
 
 module.exports.create = async function (req, res) {
@@ -42,6 +43,9 @@ module.exports.destroy = async function (req, res) {
 
             //to delete comments related to post
             await Comment.deleteMany({ post: req.params.id })//deletes many comments from Comment Schema
+
+            await Like.deleteMany({likeable:req.params.id, onModel: 'Post'});
+            await Like.deleteMany({likeable: post.comments});
 
             // if the request is xhr then it will be passed to ajax
             if (req.xhr){

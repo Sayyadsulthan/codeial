@@ -15,6 +15,26 @@
                 <small>
                     <%= post.user.name %>
                 </small>
+
+                <% if(locals.user ){ %>
+                <small>
+                    <a  href="/likes/toggle/?id=<%= post.id %>&type=Post">
+                       <% let likeduser; %>
+                       <% for(temp of post.likes){ %>
+                        <% if(temp.user == user.id){ %>
+                            <%likeduser= temp.user; %>
+                            <% break; %>
+                            <% } %>
+                            <% } %>
+                            
+                       <% if(post.likes.length>0 && likeduser == user.id){ %>
+                            <label for=""><i class="fa-solid fa-heart"></i> <%= post.likes.length %></label>
+                       <% }else{ %>
+                            <label for=""><i class="fa-regular fa-heart"></i> <%= post.likes.length %></label>
+                       <% } %> 
+                    </a>
+                </small>
+                <% } %>
     </p>
 
     <div class="post-comments">

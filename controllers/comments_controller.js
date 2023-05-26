@@ -4,6 +4,7 @@ const { post } = require('../routes');
 const commentsMailer = require('../mailers/comments_mailer');
 const queue = require('../config/kue');
 const commentEmailWorker = require('../workers/comment_email_worker');
+const Like = require('../models/like');
 
 module.exports.create = async function (req, res) {
 
@@ -60,13 +61,20 @@ module.exports.destroy = async (req, res) => {
             let postId = comment.post;
 
             //deleting comment from commentSchema
-            Comment.deleteOne(comment)
+            // Comment.deleteOne(comment)
+            //     .then(() => {
+            //         console.log("comment deleted succesfully ");
+            //     })
+
+                comment.deleteOne()
                 .then(() => {
                     console.log("comment deleted succesfully ");
                 })
 
             //update the comments in postSchema
-            await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } })
+            await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
+
+            await Like.deleteMany({likeable: comment.id, onModel: 'Comment'});
             req.flash('success', 'comment deleted successfully..');
 
                // send the comment id which was deleted back to the views
