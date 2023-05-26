@@ -60,24 +60,19 @@ module.exports.destroy = async (req, res) => {
 
             let postId = comment.post;
 
-            //deleting comment from commentSchema
-            // Comment.deleteOne(comment)
-            //     .then(() => {
-            //         console.log("comment deleted succesfully ");
-            //     })
-
+            //update the comments in postSchema
+            await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
+           
+            //deleting comment 
                 comment.deleteOne()
                 .then(() => {
                     console.log("comment deleted succesfully ");
                 })
 
-            //update the comments in postSchema
-            await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
-
+                // destroy the associated likes for this comment
             await Like.deleteMany({likeable: comment.id, onModel: 'Comment'});
-            req.flash('success', 'comment deleted successfully..');
-
-               // send the comment id which was deleted back to the views
+            
+            // send the comment id which was deleted back to the views
             if (req.xhr){
                 return res.status(200).json({
                     data: {
@@ -86,6 +81,8 @@ module.exports.destroy = async (req, res) => {
                     message: "Post deleted"
                 });
             }
+            
+            req.flash('success', 'comment deleted successfully..');
 
             return res.redirect('back');
         } else {

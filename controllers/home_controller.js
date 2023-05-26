@@ -18,6 +18,7 @@ module.exports.home = async function (req, res) {
             .exec()
 
         let users = await User.find({})
+        
         return res.render('home', {
             title: "posts",
             subtitle: "Home",

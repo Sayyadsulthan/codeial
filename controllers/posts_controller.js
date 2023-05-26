@@ -35,18 +35,17 @@ module.exports.destroy = async function (req, res) {
     try {
         let post = await Post.findById(req.params.id)
         if (post.user == req.user.id) {
-            //to delete post
-            Post.deleteOne(post)//delete the post in Post Schema
-                .then(() => {
-                    console.log("post deleted successfully")
-                })
-
+            
             //to delete comments related to post
-            await Comment.deleteMany({ post: req.params.id })//deletes many comments from Comment Schema
-
+            await Comment.deleteMany({ post: post })//deletes many comments from Comment Schema
+            
             await Like.deleteMany({likeable:req.params.id, onModel: 'Post'});
             await Like.deleteMany({likeable: post.comments});
-
+            
+            //to delete post
+           await post.deleteOne()//delete the post in Post Schema
+           console.log("post deleted successfully")
+                
             // if the request is xhr then it will be passed to ajax
             if (req.xhr){
                 return res.status(200).json({
