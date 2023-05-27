@@ -23,14 +23,51 @@
         </div>
     </section>
 
-    <section id="user-friends">
-        <h4>Friends</h4>
-        <% for(u of all_users){ %>
-            <p>
-                <a href="users/profile/<%= u.id %>"> <%= u.name %></a>
-            </p>
+    <div id="user-friends-container">
+
+        <% if(locals.user){ %>
+
+            <section id="user-friends">
+                <h4>Friends</h4>
+                <% for(let f of friends){ %>
+                    <p>
+                        <% if(locals.user.id == f.to_user.id){ %>
+                            
+                            <%= f.from_user.name %>
+                            <small>
+                                <a href="/friends/destroy/?toUser=<%= f.from_user.id %>">Remove  Friend</a>
+                            </small>
+                            <% }else{ %>
+                                
+                                <%= f.to_user.name %>
+                            <small>
+                                <a href="/friends/destroy/?toUser=<%= f.to_user.id %>">Remove  Friend</a>
+                            </small>
+                        <% } %>
+                    </p>
+
+                    <% } %>
+                </section>
         <% } %>
-    </section>
+
+        <section id="all-users">
+            <h4>All Users</h4>
+            <% for(u of all_users){ %>
+                <p>
+                    
+                    <a href="users/profile/<%= u.id %>"> <%= u.name %></a> 
+                    <small>
+
+                        <% if(locals.user && locals.user.id != u.id) {%>
+                            <a href="/friends/create/?toUser=<%= u.id %>"> 
+                            <i class="fa-solid fa-user"></i>Add Friend</a>
+                        <% } %>
+                    </small>
+                </p>
+            <% } %>
+        </section>
+    </div>
+
 </div>
 
 <script src="/js/home_post_comments.js"></script>

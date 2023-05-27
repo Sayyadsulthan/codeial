@@ -5,9 +5,15 @@
   width: 70%;
   padding: 10px;
 }
-#home-container #user-friends {
+#home-container #user-friends-container {
   width: 30%;
   padding-left: 10px;
   border-left: 1px solid lightgray;
   height: 100%;
+}
+#home-container #user-friends, #home-container #all-users {
+  padding: 10px;
+}
+#home-container #user-friends small, #home-container #all-users small {
+  margin-left: 10px;
 }
