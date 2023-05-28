@@ -4,6 +4,7 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const db= require('./config/mongoose');
 const cookeiParser = require('cookie-parser');
+
 // used for session cookie
 const session = require('express-session');
 const passport = require('passport');
@@ -13,6 +14,12 @@ const passportGoogle = require('./config/passport-google-oauth2-strategy');
 const MongoStore= require('connect-mongo');
 const flash = require('connect-flash');
 const customMware = require('./config/middleware');
+
+// setup the chat server to used with socket.io
+const chatServer = require('http').Server(app);
+const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
+chatSockets.listen(2000);
+console.log("socket is listening on port : 5000");
 
 app.use(express.urlencoded());
 
