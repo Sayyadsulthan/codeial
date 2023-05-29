@@ -18,10 +18,10 @@ const customMware = require('./config/middleware');
 // setup the chat server to used with socket.io
 const chatServer = require('http').Server(app);
 const chatSockets = require('./config/chat_sockets').chatSockets(chatServer);
-chatSockets.listen(2000);
+chatServer.listen(5000);
 console.log("socket is listening on port : 5000");
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
 
 app.use(cookeiParser());
 // setting up static folder 
